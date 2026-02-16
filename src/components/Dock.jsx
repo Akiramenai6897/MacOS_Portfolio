@@ -3,8 +3,10 @@ import { dockApps } from "#constants/index.js";
 import { Tooltip } from 'react-tooltip';
 import gsap from "gsap";
 import {useGSAP} from "@gsap/react";
+import useWindowStore from "#store/window.js";
 
 const Dock = () => {
+    const { openWindow, closeWindow, windows } = useWindowStore();
     const dockRef = useRef(null);
 
     useGSAP(() => {
@@ -13,12 +15,12 @@ const Dock = () => {
 
         const icons = dock.querySelectorAll('.dock-icon');
 
-        const animateIcons = (mouseX) => {
-            const { left } = dock.getBoundingClientRect();
+        const { left } = dock.getBoundingClientRect();
 
+        const animateIcons = (mouseX) => {
             icons.forEach((icon) => {
-                const { left: iconLeft, width } = icon.getBoundingClientRect();
-                const center = iconLeft - left + width / 2;
+                const { left: iconLeft, width: iconWidth } = icon.getBoundingClientRect();
+                const center = iconLeft - left + iconWidth / 2;
                 const distance = Math.abs(mouseX - center);
 
                 const intensity = Math.exp(-(distance ** 2.5) / 10000)
@@ -33,8 +35,6 @@ const Dock = () => {
         }
 
         const handleMouseMove = (e) => {
-            const { left } = dock.getBoundingClientRect();
-
             animateIcons(e.clientX - left);
         };
 
@@ -59,7 +59,22 @@ const Dock = () => {
     }, []);
 
     const toggleApp = (app) => {
-      // TODO Implement Open Window Logic
+        if(!app.canOpen) return;
+
+        const window = windows[app.id];
+
+        if (!window) {
+            console.error(`Window not found for app: ${app.id}`);
+            return;
+        }
+
+        if(window.isOpen) {
+            closeWindow(app.id);
+        } else {
+            openWindow(app.id);
+        }
+
+        console.log(windows)
     };
 
     return (
