@@ -12,9 +12,7 @@ const WindowWrapper = (Component, windowKey) => {
 
         useGSAP(() => {
             const el = ref.current;
-            if(!el || isOpen) return;
-
-            el.style.display = "block";
+            if(!el || !isOpen) return;
 
             gsap.fromTo(
                 el,
