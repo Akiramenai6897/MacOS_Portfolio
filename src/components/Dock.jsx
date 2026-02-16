@@ -35,6 +35,7 @@ const Dock = () => {
         }
 
         const handleMouseMove = (e) => {
+            const { left } = dock.getBoundingClientRect();
             animateIcons(e.clientX - left);
         };
 
@@ -73,8 +74,6 @@ const Dock = () => {
         } else {
             openWindow(app.id);
         }
-
-        console.log(windows)
     };
 
     return (

@@ -24,7 +24,7 @@ const Navbar = () => {
                         <li key={id}>
                             <img
                                 src={img}
-                                className={"icon-hover"}
+                                className={"icon"}
                                 alt={`icon-${id}`}
                             />
                         </li>

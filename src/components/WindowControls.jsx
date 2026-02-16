@@ -5,10 +5,20 @@ const WindowControls = ({ target }) => {
     const { closeWindow } = useWindowStore();
 
     return (
-        <div id={"window-controls"}>
-            <div className={"close"} onClick={() => closeWindow(target)} />
-            <div className={"minimize"} />
-            <div className={"maximize"} />
+        <div className={"window-controls"}>
+            <button
+                className={"close"}
+                aria-label={"Close"}
+                onClick={() => closeWindow(target)}
+            />
+            <button
+                className={"minimize"}
+                aria-label={"Minimize"}
+            />
+            <button
+                className={"maximize"}
+                aria-label={"Maximize"}
+            />
         </div>
     );
 };
